@@ -11,7 +11,7 @@ public class Schedule {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long id;
+	long scheduleId;
 	
 	@Column(name = "classroom_id")
 	long classrooomId;
@@ -42,12 +42,12 @@ public class Schedule {
 		this.subjectId = subjectId;
 	}
 
-	public long getId() {
-		return id;
+	public long getScheduleId() {
+		return scheduleId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setScheduleId(long id) {
+		this.scheduleId = id;
 	}
 
 	public long getClassrooomId() {
@@ -90,11 +90,7 @@ public class Schedule {
 		this.subjectId = subjectId;
 	}
 
-	@Override
-	public String toString() {
-		return "Schedule [id=" + id + ", classrooomId=" + classrooomId + ", dayOfWeek=" + dayOfWeek + ", startTime="
-				+ startTime + ", endTime=" + endTime + ", subjectId=" + subjectId + "]";
-	}
+	
 	
 	
 	

@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,31 +30,22 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/all-Schedules")
-	public List<Schedule> getAllSchedules(Schedule schedule) {
+	public ArrayList<Schedule> getAllSchedules(Schedule schedule) {
 		return servise.getAllSchedules(schedule);
 	}
 	
-	@GetMapping("/get-by-id/{id}")
-	public Schedule getScheduleById(@PathVariable long id ) {
-		return servise.getScheduleById(id);
+	@GetMapping("/get-by-id/{scheduleId}")
+	public List<Schedule> getScheduleById(@PathVariable long scheduleId ) {
+		return servise.getScheduleById(scheduleId);
 	}
 	
-	@PutMapping("/update-by-id/{id}")
-	public Schedule updateSchedules(@PathVariable long id,@RequestBody Schedule scheduleDetails) {
-		Schedule schedule=servise.getScheduleById(id);
-		if(schedule!=null) {
-			schedule.setClassrooomId(scheduleDetails.getClassrooomId());
-			schedule.setDayOfWeek(scheduleDetails.getDayOfWeek());
-			schedule.setStartTime(scheduleDetails.getStartTime());
-			schedule.setEndTime(scheduleDetails.getEndTime());
-			schedule.setSubjectId(scheduleDetails.getSubjectId());
-			servise.updateSchedules(schedule);
-		}
-		return schedule;
+	@PutMapping("/update-by-id/{scheduleId}")
+	public String updateSchedules(@PathVariable long scheduleId,@RequestBody Schedule scheduleDetails) {
+		return servise.updateSchedules(scheduleDetails,scheduleId);
 	}
 	
 	@DeleteMapping("/delete-by-id/{id}")
-	public String  deleteSchedule(@PathVariable long id) {
-		return servise.deleteSchedule(id);
+	public String  deleteSchedule(@PathVariable long scheduleId) {
+		return servise.deleteSchedule(scheduleId);
 	}
 }

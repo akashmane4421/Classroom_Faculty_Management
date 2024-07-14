@@ -11,29 +11,29 @@ public class Subjects {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long subjectId;
 	@Column(name = "course_id")
 	long courseId;
 	
-	String name;
+	String subjectName;
 
 	public Subjects() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Subjects( long courseId, String name) {
+	public Subjects(long courseId, String subjectName) {
 		super();
 		this.courseId = courseId;
-		this.name = name;
+		this.subjectName = subjectName;
 	}
 
-	public long getId() {
-		return id;
+	public long getSubjectId() {
+		return subjectId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setSubjectId(long subjectId) {
+		this.subjectId = subjectId;
 	}
 
 	public long getCourseId() {
@@ -44,18 +44,13 @@ public class Subjects {
 		this.courseId = courseId;
 	}
 
-	public String getName() {
-		return name;
+	public String getSubjectName() {
+		return subjectName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
 	}
 
-	@Override
-	public String toString() {
-		return "Subjects [id=" + id + ", courseId=" + courseId + ", name=" + name + "]";
-	}
-	
 	
 }

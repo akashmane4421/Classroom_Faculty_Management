@@ -18,41 +18,36 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private String name;
+    private Long departmentId;
+    private String departmentName;
     
 	public Department() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Department( String name) {
+	public Department(String departmentName) {
 		super();
-		
-		this.name = name;
+		this.departmentName = departmentName;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getDepartmentId() {
+		return departmentId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
 	}
 
-	public String getName() {
-		return name;
+	public String getDepartmentName() {
+		return departmentName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
 	}
 
-	@Override
-	public String toString() {
-		return "Department [id=" + id + ", name=" + name + "]";
-	}
+	
 
     
 }

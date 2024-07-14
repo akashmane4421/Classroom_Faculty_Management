@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,37 +20,32 @@ import com.project.service.CourseService;
 @RequestMapping("/api/course")
 public class CourseController {
 
-	 @Autowired
-	    private CourseService service;
+	@Autowired
+	private CourseService courseService;
 
-	    @GetMapping
-	    public List<Course> getAllCourses(Course course) {
-	        return service.getAllCourses(course);
-	    }
+	@PostMapping("/insert")
+	public Course createCourse(@RequestBody Course course) {
+		courseService.createCourse(course);
+		return course;
+	}
 
-	    @GetMapping("/{id}")
-	    public Course getCourseById(@PathVariable Long id) {
-	        return service.getCourseById(id);
-	    }
+	@GetMapping("/get-all-courses")
+	public ArrayList<Course> getAllCourses() {
+		return courseService.getAllCourses();
+	}
 
-	    @PostMapping("/insert")
-	    public Course createCourse(@RequestBody Course course) {
-	        service.createCourse(course);
-	        return course;
-	    }
+	@GetMapping("/get-by-Id/{courseId}")
+	public List<Course> getCourseById(@PathVariable Long courseId) {
+		return courseService.getCourseById(courseId);
+	}
 
-	    @PutMapping("/{id}")
-	    public Course updateCourse(@PathVariable Long id, @RequestBody Course courseDetails) {
-	        Course course = service.getCourseById(id);// DB se
-	        if (course != null) {
-	            course.setName(courseDetails.getName()); // hamara data set
-	            service.updateCourse(course);
-	        }
-	        return course;
-	    }
+	@PutMapping("/update-by-id/{courseId}")
+	public String updateCourse(@PathVariable Long courseId, @RequestBody Course courseDetails) {
+		return courseService.updateCourse(courseDetails, courseId);
+	}
 
-	    @DeleteMapping("/{id}")
-	    public String deleteCourse(@PathVariable Long id) {
-	      return   service.deleteCourse(id);
-	    }
+	@DeleteMapping("/delete-by-id/{courseId}")
+	public String deleteCourse(@PathVariable Long courseId) {
+		return courseService.deleteCourse(courseId);
+	}
 }

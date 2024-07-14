@@ -21,34 +21,32 @@ import com.project.service.FacultiesServise;
 @RestController
 @RequestMapping("/api/faculties")
 public class FacultiesController {
-	
+
 	@Autowired
 	FacultiesServise service;
-	
+
 	@PostMapping("/insert")
-	public String createFaculties(@RequestBody Faculties faculties ) {
+	public String createFaculties(@RequestBody Faculties faculties) {
 		return service.createFaculties(faculties);
 	}
-	
+
 	@GetMapping("/getAllFaculties")
 	public List<Faculties> getAllFaculties() {
 		return service.getAllFaculties();
 	}
-	
+
 	@GetMapping("/{id}")
-	public Faculties getFacultiesById(@PathVariable int id) {
-		System.out.println(service.getFacultiesById(id));
-		return service.getFacultiesById(id);
+	public List<Faculties> getFacultiesById(@PathVariable long facultyId) {
+		return service.getFacultiesById(facultyId);
 	}
 
 	@PutMapping("/{id}")
-	public String updateById(@PathVariable int id,@RequestBody Faculties faculty) {
-		return service.updateById(id,faculty);
+	public String updateById(@PathVariable long facultyId, @RequestBody Faculties faculty) {
+		return service.updateById(facultyId, faculty);
 	}
-	
-	
+
 	@DeleteMapping("/{id}")
-	public void deleteFacultiesByid(@PathVariable int id) {
-		 service.deleteFacultiesByid(id);
+	public String deleteFacultiesByid(@PathVariable long facultyId) {
+		return service.deleteFacultiesByid(facultyId);
 	}
 }

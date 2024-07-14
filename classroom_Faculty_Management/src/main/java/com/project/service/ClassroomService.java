@@ -1,42 +1,56 @@
 package com.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.Masseges;
 import com.project.dao.Classroomdao;
 import com.project.entity.Classroom;
 
 @Service
 public class ClassroomService {
 	@Autowired
-	Classroomdao dao;
+	Classroomdao classroomDao;
 
 	public String insertdata(Classroom classroom) {
-		return dao.insertdata(classroom);
+		if (classroomDao.insertdata(classroom)) {
+			return Masseges.insertData();
+		} else {
+			return Masseges.notInsertData();
+		}
 	}
 
-	public List<Classroom> getAllClassrooms(Classroom classroom) {
-		return dao.getAllClassrooms(classroom);
+	public ArrayList<Classroom> getAllClassrooms() {
+		return classroomDao.getAllClassrooms();
 	}
 
 	public Classroom getClassroomById(long id) {
-		
-		return dao.getClassroomById(id);
+		if (classroomDao.getClassroomById(id) != null) {
+			return classroomDao.getClassroomById(id);
+		} else {
+			Masseges.notFoundData();
+		}
+		return null;
 	}
 
-	public String createClassroom(Classroom classroom) {
-		return dao.createClassroom(classroom);
+	public String updateClassroom(Classroom classroomDetails, long classroomId) {
+		if (classroomDao.updateClassroom(classroomDetails, classroomId)) {
+			return Masseges.updateData();
+		} else {
+			return Masseges.notUpdateData();
+		}
 	}
 
-	public void updateClassroom(Classroom classroom) {
-		  dao.updateClassroom(classroom);
-	}
+	public String deleteClassroom(long classroomId) {
+		if (classroomDao.deleteClassroom(classroomId)) {
+			return Masseges.deleteData();
+		} else {
+			return Masseges.notDeleteData();
+		}
 
-	public void deleteClassroom(long id) {
-
-		dao.deleteClassroom(id);
 	}
 
 }

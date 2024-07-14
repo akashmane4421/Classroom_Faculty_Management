@@ -15,44 +15,41 @@ public class Classroom {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long id;
-	String name;
+	long classroomId;
+	String classroomName;
 	
 	
 	public Classroom() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Classroom(long id, String name) {
+
+	public Classroom( String classroomName) {
 		super();
-		this.id = id;
-		this.name = name;
+		this.classroomName = classroomName;
 	}
 
-	public long getId() {
-		return id;
+
+	public long getClassroomId() {
+		return classroomId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+
+	public void setClassroomId(long classroomId) {
+		this.classroomId = classroomId;
 	}
 
-	public String getName() {
-		return name;
+
+	public String getClassroomName() {
+		return classroomName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+	public void setClassroomName(String classroomName) {
+		this.classroomName = classroomName;
 	}
 
 	
-	
-
-	@Override
-	public String toString() {
-		return "Classroom [id=" + id + ", name=" + name + "]";
-	}
 	
 	
 }

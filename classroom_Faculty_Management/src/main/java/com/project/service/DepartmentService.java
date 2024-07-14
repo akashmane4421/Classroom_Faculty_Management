@@ -1,41 +1,56 @@
 package com.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.Masseges;
 import com.project.dao.DepartmentDao;
 import com.project.entity.Department;
 
 @Service
 public class DepartmentService {
-	
-	@Autowired
-	DepartmentDao dao;
 
-	public List<Department> getAllDepartments(Department department) {
-		return dao.getAllDepartments(department);
+	@Autowired
+	DepartmentDao departmentDao;
+
+	public ArrayList<Department> getAllDepartments() {
+		return departmentDao.getAllDepartments();
 	}
 
-	public Department getDepartmentById(Long id) {
-		return dao.getDepartmentById(id);
+	public List<Department> getDepartmentById(Long departmentId) {
+		if (departmentDao.getDepartmentById(departmentId) != null) {
+			return departmentDao.getDepartmentById(departmentId);
+		} else {
+			Masseges.notFoundData();
+		}
+		return null;
 	}
 
 	public String insertdata(Department department) {
-		return dao.insertdata(department);
-	}
-	
-	public Department createDepartment(Department department) {
-		return dao.createDepartment(department);
-	}
+		if (departmentDao.insertdata(department)) {
+			return Masseges.insertData();
+		} else {
+			return Masseges.notInsertData();
+		}
 
-	public Department updateDepartment(Department department) {
-		return dao.updateDepartment(department);
 	}
 
-	public String  deleteDepartment(Long id) {
+	public String updateDepartment(Department department, long departmentId) {
+		if (departmentDao.updateDepartment(department, departmentId)) {
+			return Masseges.updateData();
+		} else {
+			return Masseges.notUpdateData();
+		}
+	}
 
-		return dao.deleteDepartment(id);
+	public String deleteDepartment(Long departmentId) {
+		if (departmentDao.deleteDepartment(departmentId)) {
+			return Masseges.deleteData();
+		} else {
+			return Masseges.notDeleteData();
+		}
 	}
 }

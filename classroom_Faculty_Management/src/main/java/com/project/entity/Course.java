@@ -11,39 +11,36 @@ import javax.persistence.Table;
 @Table(name = "courses")
 public class Course {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long courseId;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String courseName;
 
 	public Course() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Course( String name) {
+	public Course(String courseName) {
 		super();
-		this.name = name;
+		this.courseName = courseName;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getCourseId() {
+		return courseId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
 	}
 
-	public String getName() {
-		return name;
+	public String getCourseName() {
+		return courseName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 
-    
 }
-

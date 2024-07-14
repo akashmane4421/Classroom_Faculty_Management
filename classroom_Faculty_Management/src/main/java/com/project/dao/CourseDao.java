@@ -1,6 +1,8 @@
 package com.project.dao;
 
 import java.awt.desktop.UserSessionListener;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -10,69 +12,96 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.project.Masseges;
 import com.project.entity.Course;
 
 @Repository
 public class CourseDao {
-	
+
+	private static final Serializable courseId = null;
 	@Autowired
 	SessionFactory factory;
 
-	public Course createCourse(Course course) {
-
-		Session session=factory.openSession();
-		Transaction tx=session.beginTransaction();
-		
-		session.save(course);
-		
-		tx.commit();
-		session.close();
-		
-		return course;
+	public boolean createCourse(Course course) {
+		try {
+			Session session = factory.openSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(course);
+			transaction.commit();
+			session.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return false;
 	}
 
-	public List<Course> getAllCourses(Course course) {
-		Session session=factory.openSession();
-		Criteria c=session.createCriteria(Course.class);
-		List<Course> clist=(List<Course>) c.list();
-		session.close();
-		return clist;
+	public ArrayList<Course> getAllCourses() {
+		ArrayList<Course> clist = null;
+		try {
+			Session session = factory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Criteria criteria = session.createCriteria(Course.class);
+			clist = (ArrayList<Course>) criteria.list();
+			transaction.commit();
+			session.close();
+			return clist;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return null;
 	}
 
-	public Course getCourseById(Long id) {
-		
-		Session session=factory.openSession();
-		
-		Course course=session.get(Course.class, id);
-		return course;
+	public List<Course> getCourseById(Long courseId) {
+		List<Course> courses = null;
+		try {
+			Session session = factory.openSession();
+			courses = (List<Course>) session.get(Course.class, courseId);
+			session.close();
+			return courses;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return null;
 	}
 
-	public Course updateCourse(Course course) {
+	public boolean updateCourse(Course courseDetails, Long courseId) {
+		try {
+			Session session = factory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Course course = session.load(Course.class, courseId);
+			if (course != null) {
+				course.setCourseName(courseDetails.getCourseName());
+				session.update(course);
+			}
+			transaction.commit();
+			session.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return false;
 
-		Session session=factory.openSession();
-		
-		Transaction tx=session.beginTransaction();
-		
-		session.update(course);
-		
-		tx.commit();
-		session.close();
-		return course;
 	}
 
-	public String deleteCourse(Long id) {
-
-		Session session=factory.openSession();
-		
-		Transaction tx=session.beginTransaction();
-		
-		Course course =session.load(Course.class, id);
-		
-		session.delete(course);
-		
-		tx.commit();
-		session.close();
-		return "Data Delete Successfully";
+	public boolean deleteCourse(Long courseId) {
+		try {
+			Session session = factory.openSession();
+			Transaction transaction = session.beginTransaction();
+			Course course = session.load(Course.class, courseId);
+			session.delete(course);
+			transaction.commit();
+			session.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return false;
 	}
 
 }

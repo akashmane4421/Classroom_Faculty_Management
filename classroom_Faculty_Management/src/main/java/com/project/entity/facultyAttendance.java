@@ -1,8 +1,6 @@
 package com.project.entity;
 
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,47 +8,42 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.ManyToAny;
 
 @Entity
 public class facultyAttendance {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long facultySttendenceId;
 	private Date date;
 	private String status;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "faculty_id")
-	 Faculties faculties;
+	Faculties faculties;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Schedule_Id")
-	 Schedule schedule;
+	Schedule schedule;
 
 	public facultyAttendance() {
 
 	}
 
-	public facultyAttendance(int id, Date date, String status, Faculties faculties, Schedule schedule) {
+	public facultyAttendance(Date date, String status, Faculties faculties, Schedule schedule) {
 		super();
-		this.id = id;
 		this.date = date;
 		this.status = status;
 		this.faculties = faculties;
 		this.schedule = schedule;
 	}
 
-	public int getId() {
-		return id;
+	public long getFacultySttendenceId() {
+		return facultySttendenceId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setFacultySttendenceId(long facultySttendenceId) {
+		this.facultySttendenceId = facultySttendenceId;
 	}
 
 	public Date getDate() {
@@ -85,13 +78,5 @@ public class facultyAttendance {
 		this.schedule = schedule;
 	}
 
-	@Override
-	public String toString() {
-		return "facultyAttendance [id=" + id + ", date=" + date + ", status=" + status + ", faculties=" + faculties
-				+ ", schedule=" + schedule + "]";
-	}
-
 	
-	
-
 }

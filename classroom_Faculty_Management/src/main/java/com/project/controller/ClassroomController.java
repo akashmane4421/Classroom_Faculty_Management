@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,48 +21,32 @@ import com.project.service.ClassroomService;
 public class ClassroomController {
 
 	@Autowired
-	private ClassroomService service;
+	private ClassroomService classroomService;
 
 	@PostMapping("/insert")
-	public String insertdata(@RequestBody Classroom classroom) {
-		return service.insertdata(classroom);
+	public String insertClassroomData(@RequestBody Classroom classroom) {
+		return classroomService.insertdata(classroom);
 	}
 
 	@GetMapping("/get-all-data")
-	public List<Classroom> getAllClassrooms(Classroom classroom) {
-		return service.getAllClassrooms(classroom);
+	public ArrayList<Classroom> getAllClassrooms() {
+		return classroomService.getAllClassrooms();
 	}
 
-	@GetMapping("/{id}")
-	public Classroom getClassroomById(@PathVariable int id) {
-		return service.getClassroomById(id);
+	@GetMapping("/{classroomId}")
+	public Classroom getClassroomById(@PathVariable int classroomId) {
+		return classroomService.getClassroomById(classroomId);
 	}
 
-	@PostMapping("{id}")
-	public String createClassroom(Classroom classroom) {
-
-		return service.createClassroom(classroom);
-
+	@PutMapping("/{classroomId}")
+	public String updateClassroom(@PathVariable("classroomId") long classroomId, @RequestBody Classroom classroomDetails) {
+		return classroomService.updateClassroom(classroomDetails,classroomId);
+		
 	}
 
-	@PutMapping("/{id}")
-	public Classroom updateClassroom(@PathVariable long id, @RequestBody Classroom classroomDetails) {
-		Classroom classroom = service.getClassroomById(id);
-		if (classroom != null) {
-			classroom.setName(classroomDetails.getName());
-			service.updateClassroom(classroom);
-		}
-		return classroom;
-	}
-
-	@DeleteMapping("/{id}")
-	public String deleteClassroom(@PathVariable long id) {
-		if (id == 0) {
-			return "no id found for deleting";
-		} else {
-			service.deleteClassroom(id);
-			return "data deleted...";
-		}
+	@DeleteMapping("/{classroomId}")
+	public String deleteClassroom(@PathVariable long classroomId) {
+		return classroomService.deleteClassroom(classroomId);
 
 	}
 }

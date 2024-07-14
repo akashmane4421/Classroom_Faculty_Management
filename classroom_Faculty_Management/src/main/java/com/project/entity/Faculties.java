@@ -11,7 +11,7 @@ public class Faculties {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
+	long facultyId;
 	
 	@Column(unique = true)
 	String email;
@@ -19,56 +19,62 @@ public class Faculties {
 	@Column(name = "department_id", nullable = false)
     private long departmentId;
 	
-	String name;
+	String FacultyName;
 	
 	
 	public Faculties() {
 		super();
 		}
-	
-	public Faculties(int id, String email, long departmentId, String name) {
-		this.id = id;
+
+
+	public Faculties(String email, long departmentId, String facultyName) {
+		super();
 		this.email = email;
 		this.departmentId = departmentId;
-		this.name = name;
+		FacultyName = facultyName;
 	}
 
-	public int getId() {
-		return id;
+
+	public long getFacultyId() {
+		return facultyId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+
+	public void setFacultyId(long facultyId) {
+		this.facultyId = facultyId;
 	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public long getDepartment_id() {
+
+	public long getDepartmentId() {
 		return departmentId;
 	}
 
-	public void setDepartment_id(long departmentId) {
+
+	public void setDepartmentId(long departmentId) {
 		this.departmentId = departmentId;
 	}
 
-	public String getName() {
-		return name;
+
+	public String getFacultyName() {
+		return FacultyName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	@Override
-	public String toString() {
-		return "Faculties [id=" + id + ", email=" + email + ", department_id=" +" departmentId" + ", name=" + name + "]";
+	public void setFacultyName(String facultyName) {
+		FacultyName = facultyName;
 	}
+	
+	
 
 	
 	

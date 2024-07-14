@@ -1,10 +1,9 @@
 package com.project.service;
 
-import java.util.List;
-
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.project.Masseges;
 import com.project.dao.facultyAttendanceDao;
 import com.project.entity.facultyAttendance;
 
@@ -15,15 +14,35 @@ public class facultyAttendanceService {
 	facultyAttendanceDao dao;
 
 	public String insertAttendance(facultyAttendance attendance) {
-		return dao.insertAttendance(attendance);
+		if(dao.insertAttendance(attendance)) {
+			return Masseges.insertData();
+		}else {
+			return Masseges.notInsertData();
+		}
 	}
 
-	public List<facultyAttendance> getAllAttendanceData(facultyAttendance attendance) {
-		return dao.getAllAttendanceData(attendance);
+	public ArrayList<facultyAttendance> getAllAttendanceData() {
+		return dao.getAllAttendanceData();
 	}
 
-	public facultyAttendance getAttendanceById(int id) {
-		return dao.getAttendanceById(id);
+	public facultyAttendance getAttendanceById(long facultySttendenceId) {
+		return dao.getAttendanceById(facultySttendenceId);
+	}
+
+	public String updateAttendanceById(long facultySttendenceId, facultyAttendance facultyAttendance) {
+		if(dao.updateAttendanceById(facultySttendenceId,facultyAttendance)) {
+			return Masseges.updateData();
+		}else {
+			return Masseges.notUpdateData();
+		}
+	}
+
+	public String deleteFacultyattendence(long facultySttendenceId) {
+		if (dao.deleteFacultyattendence(facultySttendenceId)) {
+			return Masseges.deleteData();
+		} else {
+			return Masseges.notDeleteData();
+		}
 	}
 
 }

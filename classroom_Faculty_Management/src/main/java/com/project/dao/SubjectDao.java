@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.Subject;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.project.Masseges;
 import com.project.entity.Course;
 import com.project.entity.Faculties;
 import com.project.entity.Subjects;
@@ -23,50 +25,83 @@ public class SubjectDao {
 	@Autowired
 	SessionFactory factory;
 
-	public String CreateSubjectData(Subjects subjects) {
-		Session session = factory.openSession();
-		Transaction transaction = session.beginTransaction();
-		session.save(subjects);
-		transaction.commit();
-		session.close();
-		return "Data insert Successfully";
+	public boolean CreateSubjectData(Subjects subjects) {
+		try {
+			Session session = factory.openSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(subjects);
+			transaction.commit();
+			session.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return false;
 	}
 
-	public List<Subjects> getAllSubjects(Subjects subjects) {
-		Session session = factory.openSession();
-		Criteria criteria = session.createCriteria(Subjects.class);
-		List<Subjects> list = (List<Subjects>) criteria.list();
-		session.close();
-		return list;
+	public ArrayList<Subjects> getAllSubjects() {
+		ArrayList<Subjects> subjects = null;
+		try {
+			Session session = factory.openSession();
+			Criteria criteria = session.createCriteria(Subjects.class);
+			subjects = (ArrayList<Subjects>) criteria.list();
+			session.close();
+			return subjects;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return null;
 	}
 
-	public Subjects getDetailsById(long id) {
-		Session session = factory.openSession();
-		Subjects subjects = session.get(Subjects.class, id);
-		session.close();
-		return subjects;
+	public List<Subjects> getDetailsById(long subjectId) {
+		List<Subjects> subjects = null;
+		try {
+			Session session = factory.openSession();
+			subjects = (List<Subjects>) session.get(Subjects.class, subjectId);
+			session.close();
+			return subjects;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return null;
 	}
 
-	public Subjects updateSubjects(long id, Subjects subjects) {
-
+	public boolean updateSubjects(long subjectId, Subjects subjects) {
+		try {
 		Session session=factory.openSession();
 		Transaction transaction=session.beginTransaction();
-		Subjects sublist =session.load(Subjects.class, id);
+		Subjects sublist =session.load(Subjects.class, subjectId);
 		if(sublist!=null) {
 			sublist.setCourseId(subjects.getCourseId());
-			sublist.setName(subjects.getName());
-			session.save(subjects);
+			sublist.setSubjectName(subjects.getSubjectName());
+			session.update(subjects);
 		}
-		return subjects;
+		transaction.commit();
+		session.close();
+		return true;
+		}catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return false;
 	}
 
-	public String deleteSubject(long id) {
-		Session session=factory.openSession();
-		Transaction transaction=session.beginTransaction();
-		Subjects subjects=session.load(Subjects.class, id);
+	public boolean deleteSubject(long subjectId) {
+		try {
+		Session session = factory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Subjects subjects = session.load(Subjects.class, subjectId);
 		session.delete(subjects);
 		transaction.commit();
 		session.close();
-		return "Data delete Successfully";
+		return true;
+		}catch (Exception e) {
+			e.printStackTrace();
+			Masseges.error();
+		}
+		return false;
 	}
 }

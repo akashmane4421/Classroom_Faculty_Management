@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,44 +19,31 @@ import com.project.service.DepartmentService;
 @RestController
 @RequestMapping("/api/departments")
 public class DepartmentController {
-	  @Autowired
-	    private DepartmentService service;
-	  
-	  @PostMapping("/insertdata")
-	  public String insertdata(@RequestBody Department department) {
-		  return service.insertdata(department);
-	  }
+	@Autowired
+	private DepartmentService departmentService;
 
-	    @GetMapping
-	    public List<Department> getAllDepartments(Department department) {
-	        return service.getAllDepartments(department);
-	    }
-
-	    @GetMapping("/{id}")
-	    public Department getDepartmentById(@PathVariable Long id) {
-	        return service.getDepartmentById(id);
-	    }
-
-	    @PostMapping
-	    public Department createDepartment(@RequestBody Department department) {
-	        service.createDepartment(department);
-	        return department;
-	    }
-
-	    @PutMapping("/{id}")
-	    public Department updateDepartment(@PathVariable Long id, @RequestBody Department departmentDetails) {
-	        Department department = service.getDepartmentById(id);
-	        if (department != null) {
-	            department.setName(departmentDetails.getName());
-	            service.updateDepartment(department);
-	        }
-	        return department;
-	    }
-
-	    @DeleteMapping("/{id}")
-	    public String deleteDepartment(@PathVariable Long id) {
-	       return service.deleteDepartment(id);
-	    }
+	@PostMapping("/insertdata")
+	public String insertdata(@RequestBody Department department) {
+		return departmentService.insertdata(department);
 	}
 
+	@GetMapping
+	public ArrayList<Department> getAllDepartments() {
+		return departmentService.getAllDepartments();
+	}
 
+	@GetMapping("/{departmentId}")
+	public List<Department> getDepartmentById(@PathVariable Long departmentId) {
+		return departmentService.getDepartmentById(departmentId);
+	}
+
+	@PutMapping("/{departmentId}")
+	public String updateDepartment(@PathVariable Long departmentId, @RequestBody Department departmentDetails) {
+		return departmentService.updateDepartment(departmentDetails, departmentId);
+	}
+
+	@DeleteMapping("/{departmentId}")
+	public String deleteDepartment(@PathVariable Long departmentId) {
+		return departmentService.deleteDepartment(departmentId);
+	}
+}

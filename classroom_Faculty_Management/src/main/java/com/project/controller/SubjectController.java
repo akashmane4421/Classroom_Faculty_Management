@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,24 +29,23 @@ public class SubjectController {
 	}
 
 	@GetMapping("/get-all-data")
-	public List<Subjects> getAllSubjects(Subjects subjects) {
-		System.out.println(subjects);
-		return service.getAllSubjects(subjects);
+	public ArrayList<Subjects> getAllSubjects() {
+		return service.getAllSubjects();
 		
 	}
 	
 	@GetMapping("/by-id/{id}")
-	public Subjects getDetailsById(@PathVariable long id) {
-		return service.getDetailsById(id);
+	public List<Subjects> getDetailsById(@PathVariable long subjectId) {
+		return service.getDetailsById(subjectId);
 	}
 	
 	@PutMapping("/update-by-id/{id}")
-	public Subjects updateSubjects(@PathVariable long id,@RequestBody Subjects subjects) {
-		return service.updateSubjects(id,subjects);
+	public String updateSubjects(@PathVariable long subjectId,@RequestBody Subjects subjects) {
+		return service.updateSubjects(subjectId,subjects);
 	}
 	
 	@DeleteMapping("/delete-by-id/{id}")
-	public String deleteSubject(@PathVariable long id ) {
-		return service.deleteSubject(id);
+	public String deleteSubject(@PathVariable long subjectId ) {
+		return service.deleteSubject(subjectId);
 	}
 }
